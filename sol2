@@ -1,0 +1,41 @@
+import numpy as np
+
+
+n = int(input("Matrix dimension: "))
+matrix = np.full((n, n), '-')
+
+
+for i in range (n**2):
+    while True:
+        if (i % 2) == 0:
+            #even
+            nom = 1
+        else:
+            nom = 0
+        print("\nMatrix iteration " + str(i) + ":")
+        print(matrix)
+        print("\nPlayer " + str(nom) + "'s go")
+        coord1 = int(input("Enter row: "))
+        coord1 = coord1 - 1
+        coord2 = int(input("Enter column: "))
+        coord2 = coord2 - 1
+        if (matrix[coord1][coord2]) == '-':
+            matrix[coord1][coord2] = nom
+            break
+        else:
+            print("Please enter your value in an unfilled cell!")
+   
+matrix2 = np.full((n, n), 0)
+for i in range (n):
+    for j in range (n):
+        matrix2[i][j] = int(matrix[i][j])
+print("\nThe final matrix is:")   
+print(matrix2)
+det = np.linalg.det(matrix2)
+print("The determinant of the matrix is " + str(det))
+if det == 0:
+    print("Player 0 wins!")
+else:
+    print("Player 1 wins!")
+
+
