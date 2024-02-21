@@ -1,10 +1,16 @@
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
+#n can be varied to experiment with different numbers of cards
 n = 2024.0
 n1 = 2024
 
-for i in range (50):
+freq = np.zeros(n1+1)
+xaxis = np.linspace(0.0, n, n1+1)
+
+# vary number for more/less simulations plotted
+for i in range (10):
     array = np.linspace(1.0, n, n1)
     while True:
         if len(array) > 1:
@@ -18,7 +24,11 @@ for i in range (50):
                 array.remove(array[y])
                 array = np.asarray(array)
         else:
-            print(array)
+            freq[int(array[0])] += 1
             break
+                         
+plt.bar(xaxis, freq, width = 3.0)
+plt.show()
+
                          
             
