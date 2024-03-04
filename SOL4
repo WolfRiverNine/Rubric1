@@ -1,0 +1,43 @@
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Calculate P(25)
+n = 1000000
+success = 0
+total = n
+
+for i in range (n):
+    card = 1
+    for j in range(24):
+        k = random.randint(1,2)
+        card += k
+        if card == 25:
+            success +=1
+
+print("\n\nNumber of times c(25 landed on: ", success)
+print("Total number of games: ", total)
+
+frac = success/total
+print("\nProbability of landing on c(25): ", frac)
+
+# Plot P(n)
+n = 100000
+total = n
+xaxis = np.linspace(1.0, 49.0, 49)
+freq = np.zeros(49)
+
+for i in range (n):
+    card = 1
+    freq[1] +=1
+    for j in range(24):
+        k = random.randint(1,2)
+        card += k
+        freq[int(card)] +=1
+
+for i in range(49):
+    freq[i] = freq[i]/n
+print(freq)
+
+plt.bar(xaxis, freq)
+plt.show()
