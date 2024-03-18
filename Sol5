@@ -1,0 +1,60 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+
+#rows = int(input("Number of rows/columns: "))
+#rows = rows+2
+
+counter = 0
+n = 100000
+
+xaxis = np.linspace(1.0, 10.0, 10)
+freq = np.zeros(10)
+
+for z in range (2, 11):
+    rows = z+2
+    for m in range (n):
+        mat = [[1 for _ in range(rows)] for _ in range(rows)]
+
+        for i in range (rows):
+            mat[0][i] = 0
+            mat[rows-1][i] = 0
+            mat[i][0] = 0
+            mat[i][rows-1] = 0
+
+        r1 = random.randint(1, rows-2)
+        c1 = random.randint(1, rows-2)
+        mat[r1][c1] = 0
+        while True: 
+            move = random.randint(1, 4)
+            if move == 1 and mat[r1-1][c1] == 1:
+                r1 = r1-1
+                mat[r1][c1] = 0
+            elif move == 2 and mat[r1][c1+1] == 1:
+                c1 = c1+1
+                mat[r1][c1] = 0
+            elif move == 3 and mat[r1+1][c1] == 1:
+                r1 = r1+1
+                mat[r1][c1] = 0
+            elif move == 4 and mat[r1][c1-1] == 1:
+                c1 = c1-1
+                mat[r1][c1] = 0
+            elif mat[r1-1][c1] ==0 and mat[r1][c1+1] == 0 and mat[r1+1][c1] == 0 and mat[r1][c1-1] == 0:
+                sum = 0
+                for i in range (rows):
+                    for j in range (rows):
+                        sum += mat[i][j]
+                if sum > 0:
+                    freq[z-1] +=1
+                    #counter += 1
+                break
+
+for i in range(10):
+    freq[i] = freq[i]/n
+print(freq)
+
+plt.bar(xaxis, freq)
+plt.show()
+
+#print("\n Loss probability: ")
+#print(counter/n)
