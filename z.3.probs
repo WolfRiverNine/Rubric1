@@ -1,0 +1,65 @@
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+noa = int(input("Number of type A particles at start: ")) # 1
+nob = int(input("Number of type B particles at start: ")) # 2
+noc = int(input("Number of type C particles at start: ")) # 3
+
+
+leng = noa + nob + noc
+number = int(input("\nNumber of successful collisions wanted: "))
+finish = 0
+
+for p in range(1000):
+    counter = 0
+
+    freqa = np.zeros(number)
+    freqb = np.zeros(number)
+    freqc = np.zeros(number)
+
+
+    master = np.ones(leng)
+
+    for i in range (nob):
+        master[i+noa] = 2
+    for i in range (noc):
+        master[i+noa+nob] = 3
+
+    while True:
+        part1 = random.randint(0, leng-1)
+        part2 = random.randint(0, leng-1)
+        if part1 != part2:
+            for i in range(leng):
+                if master[i] == 1.0:
+                    freqa[counter] += 1
+                if master[i] == 2.0:
+                    freqb[counter] += 1
+                if master[i] == 3.0:
+                    freqc[counter] += 1
+                
+            counter += 1
+
+            no1 = master[part1]
+            no2 = master[part2]
+            list1 = master.tolist()
+            
+            if (no1 != no2):
+                new = 6 - no1 - no2
+                master[part1] = new
+                master[part2] = new
+            if counter == number:
+                x0 = master[0]
+                print(all(item == x0 for item in master))
+                if (all(item == x0 for item in master) == True):
+                    finish += 1
+                    print(master)
+                break
+        
+
+
+
+
+print(finish)
+print(finish/1000)
+
