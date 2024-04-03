@@ -1,0 +1,56 @@
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+
+noa = int(input("Number of type A particles at start: ")) # 1
+nob = int(input("Number of type B particles at start: ")) # 2
+noc = int(input("Number of type C particles at start: ")) # 3
+
+
+leng = noa + nob + noc
+number = 2500
+finish = 0
+
+xaxis = np.linspace(0.0, number, number)
+freq = np.zeros(number)
+
+for p in range(100000):
+    counter = 0
+
+    master = np.ones(leng)
+
+    for i in range (nob):
+        master[i+noa] = 2
+    for i in range (noc):
+        master[i+noa+nob] = 3
+
+    while True:
+        part1 = random.randint(0, leng-1)
+        part2 = random.randint(0, leng-1)
+        if part1 != part2:
+                
+            #counter += 1
+
+            no1 = master[part1]
+            no2 = master[part2]
+            list1 = master.tolist()
+            
+            if (no1 != no2):
+                new = 6 - no1 - no2
+                master[part1] = new
+                master[part2] = new
+                counter += 1
+                
+                
+            x0 = master[0]
+            if (all(item == x0 for item in master) == True):
+                freq[counter-1] += 1
+                break
+            if counter == number:
+                break
+
+plt.plot(xaxis, freq)
+plt.show()
+
+
+
